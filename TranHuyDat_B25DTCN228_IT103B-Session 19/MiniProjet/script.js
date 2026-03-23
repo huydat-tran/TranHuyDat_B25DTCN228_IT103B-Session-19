@@ -57,12 +57,12 @@ const formatMoney = (money) => {
 };
 
 let saveData = () => {
-  localStorage.setItem("products", JSON.stringify(products));
+  localStorage.setItem("cart", JSON.stringify(cart));
 };
 
 let loadData = () => {
-  const data = localStorage.getItem("products");
-  if (data) products = JSON.parse(data);
+  const data = localStorage.getItem("cart");
+  if (data) cart = JSON.parse(data);
 };
 
 let init = () => {
@@ -115,6 +115,8 @@ let addCart = (id) => {
       quantity: 1,
     });
   }
+
+  saveData();
   updateUI();
 };
 
@@ -128,7 +130,7 @@ let renderCart = () => {
           <td class="right">${formatMoney(product.price)}</td>
           <td class="center">${item.quantity}</td>
           <td class="right">${formatMoney(product.price * item.quantity)}</td>
-          <td class="center btn-delete" data-id="${item.id}>Xóa</td>
+          <td class="center btn-delete" data-id="${item.id}">Xóa</td>
         </tr>
     `;
     })
@@ -170,5 +172,6 @@ let deleteItem = (id) => {
 
   cart = cart.filter((item) => item.id !== id);
 
+  saveData();
   updateUI();
 };
